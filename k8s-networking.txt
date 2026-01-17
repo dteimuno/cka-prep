@@ -1,0 +1,44 @@
+#get eth0 and MAC address from Node
+SSH into node
+use command: ip link show eth0
+
+#Show IP route default:
+ip route show default
+
+#Which etcd ports has more ports in use:
+netstat -anp | grep etcd
+
+#get kubelet configuration info
+cat /var/lib/kubelet/config.yaml 
+
+#get kubelet configuration info
+cat /var/lib/kubelet/config.yaml | grep containerRuntimeEndpoint
+
+#where are CNI binaries located?
+/opt/cni/bin
+
+#find out available CNI binaries
+ls /opt/cni/bin
+
+# what CNI is active in kubernetes cluster
+ls /etc/cni/net.d/
+
+#Delete CNI
+delete the daemon set that created the CNI, in this case flannel
+kubectl delete daemonset -n kube-flannel kube-flannel-ds
+You may have to also do the ff (deleting the daemonset takes care of all these for you)
+kubectl delete cm kube-flannel-cfg -n kube-flannel
+rm /etc/cni/net.d/10-flannel.conflist
+
+#SHow the IP address and subnet mask assigned to the controlplane node's primary network interface
+ip addr show eth0
+
+#Find the the range of IP addresses configured for PODs on this cluster
+cat /etc/kubernetes/manifests/kube-controller-manager.yaml   | grep cluster-cidr
+
+#Show the IP Range configured for the services within the cluster
+cat /etc/kubernetes/manifests/kube-controller-manager.yaml | grep "service-cluster-ip-range"
+
+#What type of proxy is the kube-proxy configured to use
+k -n kube-system logs <kube-proxy-pod-name>
+
