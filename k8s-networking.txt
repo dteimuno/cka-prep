@@ -42,3 +42,8 @@ cat /etc/kubernetes/manifests/kube-controller-manager.yaml | grep "service-clust
 #What type of proxy is the kube-proxy configured to use
 k -n kube-system logs <kube-proxy-pod-name>
 
+#Get CoreDNS configuration file
+k -n kube-system get deploy/coredns. #Search for args and the file will be there
+
+
+
