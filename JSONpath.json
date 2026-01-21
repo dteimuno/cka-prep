@@ -1,0 +1,67 @@
+#If items in list are:
+[
+  20,
+  40,
+  35,
+  85,
+  19,
+  17,
+  28,
+  94
+]
+
+#Find all items greater than 40 in a list
+$[?(@ > 40)]
+
+#Find all items in list equals to 40
+$[?(@ == 40)]
+
+#jsonpath to extract items from a json file
+cat q2.json
+{
+    "car": {
+        "color": "blue",
+        "price": "$20,000"
+    },
+    "bus": {
+        "color": "white",
+        "price": "$120,000"
+    }
+}
+
+#If the file q6.json includes the ff:
+cat q6.json
+{
+    "car": {
+        "color": "grey",
+        "price": "$35,000",
+        "wheels": [
+            {
+                "model": "hyundai",
+                "location": "front-right"
+            },
+            {
+                "model": "toyota",
+                "location": "front-left"
+            },
+            {
+                "model": "kia",
+                "location": "rear-right"
+            },
+            {
+                "model": "chrysler",
+                "location": "rear-left"
+            }
+        ]
+    }
+}
+
+#Then to extract a subsection of wheels I will use:
+cat q6.json | jpath '$.car.wheels[2]'
+#Result:
+[
+  {
+    "model": "kia",
+    "location": "rear-right"
+  }
+]
